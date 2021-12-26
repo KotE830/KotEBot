@@ -54,6 +54,18 @@ public class CommandContext {
         info.clear();
     }
 
+    public void sendMsg(String title, String titleUrl, String str) {
+        EmbedBuilder info = new EmbedBuilder();
+        info.setTitle(title, titleUrl);
+        info.setDescription(str);
+        info.setColor(0xf45642);
+        info.setFooter("create by " + this.event.getAuthor().getName(), this.event.getMember().getUser().getAvatarUrl());
+
+        this.event.getChannel().sendTyping().queue();
+        this.event.getChannel().sendMessageEmbeds(info.build()).queue();
+        info.clear();
+    }
+
     /*public MessageReceivedEvent getEvent() {
 
     }*/

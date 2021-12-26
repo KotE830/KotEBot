@@ -22,6 +22,6 @@ public class Join implements Command {
 
     @Override
     public String getHelp() {
-        return " help";
+        return "`!join` : Bot joins your voice channel.";
     }
 }

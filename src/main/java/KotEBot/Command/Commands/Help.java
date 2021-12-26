@@ -23,13 +23,11 @@ public class Help implements Command {
         if (args.isEmpty()) {
             StringBuilder builder = new StringBuilder();
 
-            builder.append("Commands\n");
-
             manager.getCommands().stream().map(Command::getName).forEach(
-                    (it) -> builder.append('`').append("!").append(it).append("`\n")
+                    (it) -> builder.append("`!").append(it).append("`\n")
             );
 
-            channel.sendMessage(builder.toString()).queue();
+            ctx.sendMsg("Commands", "https://github.com/KotE830/KotEBot/tree/main/src/main/java/KotEBot/Command/Commands", builder.toString());
             return;
         }
 
@@ -41,7 +39,7 @@ public class Help implements Command {
             return;
         }
 
-        channel.sendMessage(command.getHelp()).queue();
+        ctx.sendMsg(command.getHelp());
     }
 
     @Override
@@ -51,7 +49,8 @@ public class Help implements Command {
 
     @Override
     public String getHelp() {
-        return " help";
+        return "`!help` : List of commands.\n"
+                + "`!help [command]` : Manual of the command";
     }
 
     @Override
