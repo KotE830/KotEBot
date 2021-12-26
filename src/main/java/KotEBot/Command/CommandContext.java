@@ -18,8 +18,8 @@ public class CommandContext {
         this.args = args;
     }
 
-    public String getArg(int index) {
-        return this.args.get(index);
+    public MessageReceivedEvent getEvent() {
+        return this.event;
     }
 
     public List<String> getArgs() {

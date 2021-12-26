@@ -4,11 +4,30 @@ import KotEBot.Command.Command;
 import KotEBot.Command.CommandContext;
 import KotEBot.Music.PlayerManager;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 public class Play implements Command {
     @Override
     public void handle(CommandContext ctx) {
-        PlayerManager.getInstance().loadAndPlay(ctx.getTextChannel(), ctx.getArg(0));
-        ctx.sendMsg(ctx.getArg(0));
+        if (ctx.getArgs().isEmpty()) {
+            ctx.sendMsg("!play [youtube url]");
+            return;
+        }
+
+        if (!ctx.getEvent().getMember().getVoiceState().inAudioChannel()) {
+            ctx.sendMsg("You need to be in any voice channel.");
+            return;
+        }
+
+        String link = String.join(" ", ctx.getArgs());
+
+        if (!isUrl(link)) {
+            link = "ytsearch:" + link;
+        }
+
+        PlayerManager.getInstance().loadAndPlay(ctx.getTextChannel(), link);
+        ctx.sendMsg(link);
     }
 
     @Override
@@ -18,6 +37,15 @@ public class Play implements Command {
 
     @Override
     public String getHelp() {
-        return " help";
+        return "`!play [youtube url]` : Play youtube.";
+    }
+
+    private boolean isUrl(String url) {
+        try {
+            new URI(url);
+            return true;
+        } catch (URISyntaxException e) {
+            return false;
+        }
     }
 }
