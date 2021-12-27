@@ -16,11 +16,14 @@ public class CommandManager {
         addCommand(new Help(this));
         addCommand(new Join());
         addCommand(new Leave());
+        addCommand(new NowPlaying());
         addCommand(new Pause());
         addCommand(new Ping());
         addCommand(new Play());
         addCommand(new Queue());
         addCommand(new Remove());
+        addCommand(new Repeat());
+        addCommand(new Resume());
         addCommand(new Skip());
         addCommand(new Stop());
     }
