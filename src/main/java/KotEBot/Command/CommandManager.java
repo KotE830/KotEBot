@@ -1,6 +1,7 @@
 package KotEBot.Command;
 
 import KotEBot.Command.Commands.*;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import javax.annotation.Nullable;
@@ -29,10 +30,12 @@ public class CommandManager {
     }
 
     private void addCommand(Command cmd) {
-        boolean nameFound = this.commands.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(cmd.getName()));
+        boolean nameFound = this.commands.stream().anyMatch(
+                (it) -> it.getName().equalsIgnoreCase(cmd.getName())
+        );
 
         if (nameFound) {
-            throw new IllegalArgumentException("A command with this name is already present");
+            throw new IllegalArgumentException("A command with this name is already present.");
         }
 
         commands.add(cmd);
@@ -52,25 +55,34 @@ public class CommandManager {
             }
         }
 
-        // print not command
         return null;
     }
 
-    public void handle(MessageReceivedEvent event) {
+    public void handle(MessageReceivedEvent event, String prefix) {
         String[] split = event.getMessage().getContentRaw()
-                .replaceFirst("(?i)" + Pattern.quote("!"), "")
+                .replaceFirst("(?i)" + Pattern.quote(prefix), "")
                 .split("\\s+");
         
         String invoke = split[0].toLowerCase();
         Command cmd = this.getCommand(invoke);
 
+        event.getChannel().sendTyping().queue();
+
         if (cmd != null) {
-            event.getChannel().sendTyping().queue();
             List<String> args = Arrays.asList(split).subList(1, split.length);
 
             CommandContext ctx = new CommandContext(event, args);
 
             cmd.handle(ctx);
+        } else {
+            EmbedBuilder info = new EmbedBuilder();
+            info.setTitle("KotEBot", "https://github.com/KotE830/KotEBot");
+            info.setDescription("There is no commands.\nYou can check the commands by `!help`");
+            info.setColor(0xf45642);
+            info.setFooter("create by " + event.getAuthor().getName(), event.getMember().getUser().getAvatarUrl());
+
+            event.getChannel().sendMessageEmbeds(info.build()).queue();
+            info.clear();
         }
     }
 }

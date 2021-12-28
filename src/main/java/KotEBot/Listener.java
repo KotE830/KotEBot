@@ -1,7 +1,6 @@
 package KotEBot;
 
 import KotEBot.Command.CommandManager;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -20,19 +19,8 @@ public class Listener extends ListenerAdapter {
             return;
         }
 
-        String[] args = event.getMessage().getContentRaw().split(" ");
-/*
-        String command = args[0].substring(1);
-
-        if (command.length() == 0) {
-            printMsg(event, prefix + " command");
-            return;
-        }*/
-
-        String raw = event.getMessage().getContentRaw();
-
-        if (raw.startsWith(prefix)) {
-            manager.handle(event);
+        if (event.getMessage().getContentRaw().startsWith(prefix)) {
+            manager.handle(event, prefix);
         }
     }
 }

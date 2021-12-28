@@ -26,7 +26,7 @@ public class CommandContext {
         return this.args;
     }
 
-    public AudioChannel getChannel() {
+    public AudioChannel getVoiceChannel() {
         return this.event.getMember().getVoiceState().getChannel();
     }
 
@@ -42,6 +42,7 @@ public class CommandContext {
         return this.event.getJDA();
     }
 
+
     public void sendMsg(String str) {
         EmbedBuilder info = new EmbedBuilder();
         info.setTitle("KotEBot", "https://github.com/KotE830/KotEBot");
@@ -49,7 +50,6 @@ public class CommandContext {
         info.setColor(0xf45642);
         info.setFooter("create by " + this.event.getAuthor().getName(), this.event.getMember().getUser().getAvatarUrl());
 
-        this.event.getChannel().sendTyping().queue();
         this.event.getChannel().sendMessageEmbeds(info.build()).queue();
         info.clear();
     }
@@ -61,12 +61,7 @@ public class CommandContext {
         info.setColor(0xf45642);
         info.setFooter("create by " + this.event.getAuthor().getName(), this.event.getMember().getUser().getAvatarUrl());
 
-        this.event.getChannel().sendTyping().queue();
         this.event.getChannel().sendMessageEmbeds(info.build()).queue();
         info.clear();
     }
-
-    /*public MessageReceivedEvent getEvent() {
-
-    }*/
 }

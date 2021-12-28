@@ -9,6 +9,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.api.entities.AudioChannel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class Queue implements Command {
     @Override
     public void handle(CommandContext ctx) {
-        final AudioChannel channel = ctx.getChannel();
+        final AudioChannel channel = ctx.getVoiceChannel();
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
         final BlockingQueue<AudioTrack> queue = musicManager.scheduler.queue;
 
@@ -59,6 +60,19 @@ public class Queue implements Command {
 
     @Override
     public String getHelp() {
-        return "`!queue` : Shows the queued up songs.";
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("`!queue` : Shows the queued up songs.\n\nAliase\n");
+
+        this.getAliases().stream().forEach(
+                (it) -> builder.append("`!").append(it).append("` ")
+        );
+
+        return builder.toString();
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("q");
     }
 }

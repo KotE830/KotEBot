@@ -6,6 +6,9 @@ import KotEBot.Music.GuildMusicManager;
 import KotEBot.Music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Skip implements Command {
     @Override
     public void handle(CommandContext ctx) {
@@ -33,6 +36,19 @@ public class Skip implements Command {
 
     @Override
     public String getHelp() {
-        return "`!skip` : Skip the current track";
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("`!skip` : Skip the current track.\n\nAliase\n");
+
+        this.getAliases().stream().forEach(
+                (it) -> builder.append("`!").append(it).append("` ")
+        );
+
+        return builder.toString();
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("s");
     }
 }

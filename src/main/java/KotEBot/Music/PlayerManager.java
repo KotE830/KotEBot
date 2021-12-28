@@ -32,7 +32,7 @@ public class PlayerManager {
         return this.musicManagers.computeIfAbsent(guild.getIdLong(), (guildId) -> {
             final GuildMusicManager guildMusicManager = new GuildMusicManager(this.audioPlayerManager);
 
-            guild.getAudioManager().setSendingHandler(guildMusicManager.getSendHandler());;
+            guild.getAudioManager().setSendingHandler(guildMusicManager.getSendHandler());
 
             return guildMusicManager;
         });
@@ -56,6 +56,7 @@ public class PlayerManager {
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 final List<AudioTrack> tracks = playlist.getTracks();
+                final AudioTrack track1 = playlist.getSelectedTrack();
 
                 channel.sendMessage("Adding to queue: `")
                         .append(String.valueOf(tracks.size()))

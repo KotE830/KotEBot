@@ -22,6 +22,6 @@ public class Ping implements Command {
 
     @Override
     public String getHelp() {
-        return "`!ping` : Pings";
+        return "`!ping` : Ping.";
     }
 }

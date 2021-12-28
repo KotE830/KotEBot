@@ -5,6 +5,9 @@ import KotEBot.Command.CommandContext;
 import KotEBot.Music.GuildMusicManager;
 import KotEBot.Music.PlayerManager;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Repeat implements Command {
     @Override
     public void handle(CommandContext ctx) {
@@ -29,6 +32,19 @@ public class Repeat implements Command {
 
     @Override
     public String getHelp() {
-        return "`!repeat` : Loops the current song.";
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("`!repeat` : Loops the current song.\n\nAliase\n");
+
+        this.getAliases().stream().forEach(
+                (it) -> builder.append("`!").append(it).append("` ")
+        );
+
+        return builder.toString();
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("rp");
     }
 }

@@ -3,7 +3,6 @@ package KotEBot.Command.Commands;
 import KotEBot.Command.Command;
 import KotEBot.Command.CommandContext;
 import KotEBot.Command.CommandManager;
-import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +17,6 @@ public class Help implements Command {
     @Override
     public void handle(CommandContext ctx) {
         List<String> args = ctx.getArgs();
-        TextChannel channel = ctx.getTextChannel();
 
         if (args.isEmpty()) {
             StringBuilder builder = new StringBuilder();
@@ -35,7 +33,7 @@ public class Help implements Command {
         Command command = manager.getCommand(search);
 
         if (command == null) {
-            channel.sendMessage("Nothing found for " + search).queue();
+            ctx.sendMsg("Nothing found for `" + search + "`.");
             return;
         }
 
@@ -49,8 +47,16 @@ public class Help implements Command {
 
     @Override
     public String getHelp() {
-        return "`!help` : List of commands.\n"
-                + "`!help [command]` : Manual of the command";
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("`!help` : List of commands.\n" +
+                "`!help [command]` : Manual of the command.\n\nAliase\n");
+
+        this.getAliases().stream().forEach(
+                (it) -> builder.append("`!").append(it).append("` ")
+        );
+
+        return builder.toString();
     }
 
     @Override
