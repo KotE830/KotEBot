@@ -5,6 +5,7 @@ import KotEBot.Command.CommandContext;
 import KotEBot.Config;
 import KotEBot.Music.GuildMusicManager;
 import KotEBot.Music.PlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import java.util.Arrays;
@@ -19,7 +20,8 @@ public class Resume implements Command {
         }
 
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
-        final AudioTrack track = musicManager.audioPlayer.getPlayingTrack();
+        final AudioPlayer audioPlayer = musicManager.audioPlayer;
+        final AudioTrack track = audioPlayer.getPlayingTrack();
 
         if (track == null) {
             ctx.sendMsg("There is no track playing currently.");
@@ -31,7 +33,14 @@ public class Resume implements Command {
             return;
         }
 
-        musicManager.scheduler.player.stopTrack();
+        if (!audioPlayer.isPaused()) {
+            ctx.sendMsg("The player is playing.");
+            return;
+        }
+
+        musicManager.scheduler.onPlayerResume(audioPlayer);
+
+        ctx.sendMsg("The player has been resumed.");
     }
 
     @Override

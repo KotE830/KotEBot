@@ -5,7 +5,6 @@ import KotEBot.Command.CommandContext;
 import KotEBot.Config;
 import KotEBot.Music.GuildMusicManager;
 import KotEBot.Music.PlayerManager;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.AudioChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
@@ -20,6 +19,11 @@ public class Leave implements Command {
         final AudioTrack track = musicManager.audioPlayer.getPlayingTrack();
 
         if (track != null) {
+            if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
+                ctx.sendMsg("The music is playing.\nYou need to be in voice channel where " + Config.get("bot_name") + " is in.");
+                return;
+            }
+
             musicManager.scheduler.player.stopTrack();
             musicManager.scheduler.queue.clear();
         }

@@ -32,11 +32,26 @@ public class TrackScheduler extends AudioEventAdapter {
     @Override
     public void onPlayerPause(AudioPlayer player) {
         // Player was paused
+        player.setPaused(true);
     }
 
     @Override
     public void onPlayerResume(AudioPlayer player) {
         // Player was resumed
+        player.setPaused(false);
+    }
+
+    public void onPlayerSkip(AudioTrack track) {
+        if (this.repeating) {
+            if (this.queue.size() == 0) {
+                queue(track.makeClone());
+                return;
+            } else {
+                this.queue.offer(track.makeClone());
+            }
+        }
+
+        nextTrack();
     }
 
     @Override

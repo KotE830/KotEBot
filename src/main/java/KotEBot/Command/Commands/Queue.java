@@ -7,7 +7,6 @@ import KotEBot.Music.GuildMusicManager;
 import KotEBot.Music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
-import net.dv8tion.jda.api.entities.AudioChannel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,36 +24,43 @@ public class Queue implements Command {
 
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
         final BlockingQueue<AudioTrack> queue = musicManager.scheduler.queue;
+        final AudioTrack nowTrack = musicManager.audioPlayer.getPlayingTrack();
 
-        if (queue.isEmpty()) {
+        if (queue.isEmpty() && nowTrack == null) {
             ctx.sendMsg("The queue is currently empty.");
             return;
         }
 
-
-        AudioTrack nowTrack = musicManager.audioPlayer.getPlayingTrack();
-        AudioTrackInfo nowTrackInfo = nowTrack.getInfo();
+        final AudioTrackInfo nowTrackInfo = nowTrack.getInfo();
 
         String queueMsg = "**Now Playing**\n";
-
         queueMsg += nowTrackInfo.title + " [`" + formatTime(nowTrack.getDuration()) + "`]\n\n";
-
 
         final int trackCount = Math.min(queue.size(), 20);
         final List<AudioTrack> trackList = new ArrayList<>(queue);
 
         queueMsg += "**Next**\n";
 
+        long totalTime = 0;
+
         for (int i = 0; i < trackCount; i++) {
             final AudioTrack track = trackList.get(i);
             final AudioTrackInfo info = track.getInfo();
 
-            queueMsg += "#" + (i + 1) + " `" + info.title + "` [`" + formatTime(track.getDuration()) + "`]\n";
+            queueMsg += "#" + (i + 1) + " `" + info.title + "` [`" + formatTime(track.getDuration()) + "`]\n\n";
+            totalTime += track.getDuration();
         }
 
         if (trackList.size() > trackCount) {
-            queueMsg += "And" + (trackList.size() - trackCount) + "` more...";
+            queueMsg += "And" + (trackList.size() - trackCount) + "` more...\n\n";
+
+            for (int i = trackCount; i < trackList.size(); i++) {
+                final AudioTrack track = trackList.get(i);
+                totalTime += track.getDuration();
+            }
         }
+
+        queueMsg += "Total time : `" + formatTime(totalTime) + "`.";
 
         ctx.sendMsg(queueMsg);
     }

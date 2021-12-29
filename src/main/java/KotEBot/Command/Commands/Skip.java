@@ -5,7 +5,6 @@ import KotEBot.Command.CommandContext;
 import KotEBot.Config;
 import KotEBot.Music.GuildMusicManager;
 import KotEBot.Music.PlayerManager;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import java.util.Arrays;
@@ -32,9 +31,9 @@ public class Skip implements Command {
             return;
         }
 
-        musicManager.scheduler.queue(track);
-        musicManager.scheduler.nextTrack();
-        ctx.sendMsg("Skipped the current track.");
+        musicManager.scheduler.onPlayerSkip(track);
+
+        ctx.sendMsg("Skipped the " + track.getInfo().title + ".");
     }
 
     @Override

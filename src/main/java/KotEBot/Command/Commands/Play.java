@@ -3,9 +3,7 @@ package KotEBot.Command.Commands;
 import KotEBot.Command.Command;
 import KotEBot.Command.CommandContext;
 import KotEBot.Config;
-import KotEBot.Music.GuildMusicManager;
 import KotEBot.Music.PlayerManager;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import java.net.URI;
 import java.net.URISyntaxException;

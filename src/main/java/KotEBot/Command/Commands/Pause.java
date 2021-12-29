@@ -17,7 +17,8 @@ public class Pause implements Command {
         }
 
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
-        final AudioTrack track = musicManager.audioPlayer.getPlayingTrack();
+        final AudioPlayer audioPlayer = musicManager.audioPlayer;
+        final AudioTrack track = audioPlayer.getPlayingTrack();
 
         if (track == null) {
             ctx.sendMsg("There is no track playing currently.");
@@ -29,9 +30,14 @@ public class Pause implements Command {
             return;
         }
 
-        musicManager.scheduler.player.stopTrack();
+        if (audioPlayer.isPaused()) {
+            ctx.sendMsg("The player is already paused.");
+            return;
+        }
 
-        ctx.sendMsg("The player has been stopped.");
+        musicManager.scheduler.onPlayerPause(audioPlayer);
+
+        ctx.sendMsg("The player has been paused.");
     }
 
     @Override
