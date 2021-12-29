@@ -67,8 +67,6 @@ public class CommandManager {
         String invoke = split[0].toLowerCase();
         Command cmd = this.getCommand(invoke);
 
-        event.getChannel().sendTyping().queue();
-
         if (cmd != null) {
             List<String> args = Arrays.asList(split).subList(1, split.length);
 

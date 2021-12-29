@@ -31,16 +31,25 @@ public class Queue implements Command {
             return;
         }
 
+
+        AudioTrack nowTrack = musicManager.audioPlayer.getPlayingTrack();
+        AudioTrackInfo nowTrackInfo = nowTrack.getInfo();
+
+        String queueMsg = "**Now Playing**\n";
+
+        queueMsg += nowTrackInfo.title + " [`" + formatTime(nowTrack.getDuration()) + "`]\n\n";
+
+
         final int trackCount = Math.min(queue.size(), 20);
         final List<AudioTrack> trackList = new ArrayList<>(queue);
-        String queueMsg = "**Current Queue:**\n";
+
+        queueMsg += "**Next**\n";
 
         for (int i = 0; i < trackCount; i++) {
             final AudioTrack track = trackList.get(i);
             final AudioTrackInfo info = track.getInfo();
 
-            queueMsg += "#" + (i + 1) + " `" + info.title + " by " +
-                    info.author + "` [`" + formatTime(track.getDuration()) + "`]\n";
+            queueMsg += "#" + (i + 1) + " `" + info.title + "` [`" + formatTime(track.getDuration()) + "`]\n";
         }
 
         if (trackList.size() > trackCount) {

@@ -52,7 +52,7 @@ public class Help implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`" + Config.get("prefix") + "help` : List of commands.\n" +
+        builder.append("`" + Config.get("prefix") + "help`\nList of commands.\n" +
                 "`" + Config.get("prefix") + "help [command]` : Manual of the command.\n\nAliase\n");
 
         this.getAliases().stream().forEach(

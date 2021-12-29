@@ -23,6 +23,6 @@ public class Ping implements Command {
 
     @Override
     public String getHelp() {
-        return "`" + Config.get("prefix") + "ping` : Ping.";
+        return "`" + Config.get("prefix") + "ping`\nPing.";
     }
 }

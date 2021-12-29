@@ -32,13 +32,7 @@ public class Skip implements Command {
             return;
         }
 
-        final AudioPlayer audioPlayer = musicManager.audioPlayer;
-
-        if (audioPlayer.getPlayingTrack() == null) {
-            ctx.sendMsg("There is no track playing currrently.");
-            return;
-        }
-
+        musicManager.scheduler.queue(track);
         musicManager.scheduler.nextTrack();
         ctx.sendMsg("Skipped the current track.");
     }
@@ -52,7 +46,7 @@ public class Skip implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`" + Config.get("prefix") + "skip` : Skip the current track.\n" +
+        builder.append("`" + Config.get("prefix") + "skip`\nSkip the current track.\n" +
                 "You need to be in any voice channel with " + Config.get("bot_name") + ".\n\nAliase\n");
 
         this.getAliases().stream().forEach(

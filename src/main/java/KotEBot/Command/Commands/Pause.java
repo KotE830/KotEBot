@@ -41,7 +41,7 @@ public class Pause implements Command {
 
     @Override
     public String getHelp() {
-        return "`" + Config.get("prefix") + "pause` : Pause the current song.\n" +
+        return "`" + Config.get("prefix") + "pause`\nPause the current song.\n" +
                 "You need to be in any voice channel with " + Config.get("bot_name") + ".";
     }
 }

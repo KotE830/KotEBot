@@ -39,7 +39,7 @@ public class Join implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`" + Config.get("prefix") + "join` : Bot joins your voice channel.\n" +
+        builder.append("`" + Config.get("prefix") + "join`\nBot joins your voice channel.\n" +
                 "You need to be in any voice channel.\n\nAliase\n");
 
         this.getAliases().stream().forEach(

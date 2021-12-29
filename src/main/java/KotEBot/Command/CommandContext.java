@@ -56,6 +56,8 @@ public class CommandContext {
     }
 
     public void sendMsg(String title, String titleUrl, String str) {
+        event.getChannel().sendTyping().queue();
+
         EmbedBuilder info = new EmbedBuilder();
         info.setTitle(title, titleUrl);
         info.setDescription(str);

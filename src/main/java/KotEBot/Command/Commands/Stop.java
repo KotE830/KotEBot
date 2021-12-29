@@ -41,7 +41,7 @@ public class Stop implements Command {
 
     @Override
     public String getHelp() {
-        return "`" + Config.get("prefix") + "stop` : Stop the current song and clear the queue." +
+        return "`" + Config.get("prefix") + "stop`\nStop the current song and clear the queue.\n" +
                 "You need to be in any voice channel with " + Config.get("bot_name") + ".";
     }
 }

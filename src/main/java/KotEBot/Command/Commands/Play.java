@@ -51,7 +51,7 @@ public class Play implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`" + Config.get("prefix") + "play [youtube url]` : Play youtube.\n\nAliase\n" +
+        builder.append("`" + Config.get("prefix") + "play [youtube url]`\nPlay youtube.\n\nAliase\n" +
                 "You need to be in any voice channel with " + Config.get("bot_name") + ".\n");
 
         this.getAliases().stream().forEach(

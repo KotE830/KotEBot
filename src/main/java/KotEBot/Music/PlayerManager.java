@@ -50,16 +50,14 @@ public class PlayerManager {
             public void trackLoaded(AudioTrack track) {
                 musicManager.scheduler.queue(track);
 
-                sendMsg(event, "Adding to queue:\n`" +
-                        track.getInfo().title + "`\nby `" +
-                        track.getInfo().author + "`"
-                );
+                sendAddMsg(event, track);
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 final List<AudioTrack> tracks = playlist.getTracks();
 
+                int i = 0;
 /*
                 StringBuilder builder = new StringBuilder();
 
@@ -69,11 +67,12 @@ public class PlayerManager {
 
                 sendMsg(event, builder.toString());*/
 
-                sendMsg(event, "Adding to queue: `" + (tracks.size()) +
-                        "` tracks from playlist `" + playlist.getName() + "`"
-                );
 
-                musicManager.scheduler.queue(tracks.get(0));
+                AudioTrack track = tracks.get(i);
+
+                sendAddMsg(event, track);
+
+                musicManager.scheduler.queue(track);
             }
 
             @Override
@@ -96,10 +95,15 @@ public class PlayerManager {
         return INSTANCE;
     }
 
-    public void sendMsg(MessageReceivedEvent event, String str) {
+    public void sendAddMsg(MessageReceivedEvent event, AudioTrack track) {
+        event.getChannel().sendTyping().queue();
+
         EmbedBuilder info = new EmbedBuilder();
         info.setTitle(Config.get("bot_name"), "https://github.com/KotE830/KotEBot");
-        info.setDescription(str);
+
+        info.setDescription("Adding to queue\n`" + track.getInfo().title +
+                "`\nby `" + track.getInfo().author + "`");
+
         info.setColor(0xf45642);
         info.setFooter("create by " + event.getAuthor().getName(), event.getMember().getUser().getAvatarUrl());
 
