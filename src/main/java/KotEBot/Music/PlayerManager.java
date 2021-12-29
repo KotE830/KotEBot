@@ -1,5 +1,6 @@
 package KotEBot.Music;
 
+import KotEBot.Config;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
@@ -7,8 +8,10 @@ import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +41,8 @@ public class PlayerManager {
         });
     }
 
-    public void loadAndPlay(TextChannel channel, String trackUrl) {
+    public void loadAndPlay(MessageReceivedEvent event, String trackUrl) {
+        TextChannel channel = event.getTextChannel();
         final GuildMusicManager musicManager = this.getMusicManager(channel.getGuild());
 
         this.audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
@@ -46,28 +50,30 @@ public class PlayerManager {
             public void trackLoaded(AudioTrack track) {
                 musicManager.scheduler.queue(track);
 
-                channel.sendMessage("Adding to queue: `")
-                        .append(track.getInfo().title)
-                        .append("` by `")
-                        .append(track.getInfo().author)
-                        .queue();
+                sendMsg(event, "Adding to queue:\n`" +
+                        track.getInfo().title + "`\nby `" +
+                        track.getInfo().author + "`"
+                );
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 final List<AudioTrack> tracks = playlist.getTracks();
-                final AudioTrack track1 = playlist.getSelectedTrack();
 
-                channel.sendMessage("Adding to queue: `")
-                        .append(String.valueOf(tracks.size()))
-                        .append("` tracks from playlist `")
-                        .append(playlist.getName())
-                        .append('`')
-                        .queue();
+/*
+                StringBuilder builder = new StringBuilder();
 
-                for (final AudioTrack track : tracks) {
-                    musicManager.scheduler.queue(track);
-                }
+                tracks.stream().forEach(
+                        (it) -> builder.append(it.getInfo().title + "\n")
+                );
+
+                sendMsg(event, builder.toString());*/
+
+                sendMsg(event, "Adding to queue: `" + (tracks.size()) +
+                        "` tracks from playlist `" + playlist.getName() + "`"
+                );
+
+                musicManager.scheduler.queue(tracks.get(0));
             }
 
             @Override
@@ -88,5 +94,16 @@ public class PlayerManager {
         }
 
         return INSTANCE;
+    }
+
+    public void sendMsg(MessageReceivedEvent event, String str) {
+        EmbedBuilder info = new EmbedBuilder();
+        info.setTitle(Config.get("bot_name"), "https://github.com/KotE830/KotEBot");
+        info.setDescription(str);
+        info.setColor(0xf45642);
+        info.setFooter("create by " + event.getAuthor().getName(), event.getMember().getUser().getAvatarUrl());
+
+        event.getChannel().sendMessageEmbeds(info.build()).queue();
+        info.clear();
     }
 }

@@ -48,8 +48,12 @@ public class TrackScheduler extends AudioEventAdapter {
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         if (endReason.mayStartNext) {
             if (this.repeating) {
-                this.player.startTrack(track.makeClone(), false);
-                return;
+                if (this.queue.size() == 0) {
+                    queue(track.makeClone());
+                    return;
+                } else {
+                    this.queue.offer(track.makeClone());
+                }
             }
 
             nextTrack();

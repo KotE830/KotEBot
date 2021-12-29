@@ -1,5 +1,6 @@
 package KotEBot.Command;
 
+import KotEBot.Config;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.AudioChannel;
@@ -30,8 +31,8 @@ public class CommandContext {
         return this.event.getMember().getVoiceState().getChannel();
     }
 
-    public TextChannel getTextChannel() {
-        return this.event.getTextChannel();
+    public AudioChannel getBotChannel() {
+        return this.event.getGuild().getMemberById(Config.get("bot_id")).getVoiceState().getChannel();
     }
 
     public Guild getGuild() {
@@ -45,7 +46,7 @@ public class CommandContext {
 
     public void sendMsg(String str) {
         EmbedBuilder info = new EmbedBuilder();
-        info.setTitle("KotEBot", "https://github.com/KotE830/KotEBot");
+        info.setTitle(Config.get("bot_name"), "https://github.com/KotE830/KotEBot");
         info.setDescription(str);
         info.setColor(0xf45642);
         info.setFooter("create by " + this.event.getAuthor().getName(), this.event.getMember().getUser().getAvatarUrl());

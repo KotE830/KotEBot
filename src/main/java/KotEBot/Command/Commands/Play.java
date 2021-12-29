@@ -2,7 +2,10 @@ package KotEBot.Command.Commands;
 
 import KotEBot.Command.Command;
 import KotEBot.Command.CommandContext;
+import KotEBot.Config;
+import KotEBot.Music.GuildMusicManager;
 import KotEBot.Music.PlayerManager;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,24 +15,31 @@ import java.util.List;
 public class Play implements Command {
     @Override
     public void handle(CommandContext ctx) {
-        if (ctx.getArgs().isEmpty()) {
-            ctx.sendMsg("!play [youtube url]");
+        if (ctx.getBotChannel() == null) {
+            ctx.sendMsg(Config.get("bot_name") + " needs to be in any voice channel.");
             return;
         }
 
-        if (!ctx.getEvent().getMember().getVoiceState().inAudioChannel()) {
-            ctx.sendMsg("You need to be in any voice channel.");
+        if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
+            ctx.sendMsg("You need to be in voice channel where " + Config.get("bot_name") + " is in.");
+            return;
+        }
+
+        if (ctx.getArgs().isEmpty()) {
+            ctx.sendMsg(Config.get("prefix") + "play [youtube url]");
             return;
         }
 
         String link = String.join(" ", ctx.getArgs());
 
         if (!isUrl(link)) {
+            ctx.sendMsg("youtube search : `" + link + "`");
             link = "ytsearch:" + link;
+        } else {
+            ctx.sendMsg(link);
         }
 
-        PlayerManager.getInstance().loadAndPlay(ctx.getTextChannel(), link);
-        ctx.sendMsg(link);
+        PlayerManager.getInstance().loadAndPlay(ctx.getEvent(), link);
     }
 
     @Override
@@ -41,10 +51,11 @@ public class Play implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`!play [youtube url]` : Play youtube.\n\nAliase\n");
+        builder.append("`" + Config.get("prefix") + "play [youtube url]` : Play youtube.\n\nAliase\n" +
+                "You need to be in any voice channel with " + Config.get("bot_name") + ".\n");
 
         this.getAliases().stream().forEach(
-                (it) -> builder.append("`!").append(it).append("` ")
+                (it) -> builder.append("`" + Config.get("prefix")).append(it).append("` ")
         );
 
         return builder.toString();

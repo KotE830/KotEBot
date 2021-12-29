@@ -13,14 +13,13 @@ public class Listener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@Nonnull MessageReceivedEvent event) {
         User user = event.getAuthor();
-        String prefix = "!";
 
         if (user.isBot() || event.isWebhookMessage()) {
             return;
         }
 
-        if (event.getMessage().getContentRaw().startsWith(prefix)) {
-            manager.handle(event, prefix);
+        if (event.getMessage().getContentRaw().startsWith(Config.get("prefix"))) {
+            manager.handle(event);
         }
     }
 }

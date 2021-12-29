@@ -3,6 +3,7 @@ package KotEBot.Command.Commands;
 import KotEBot.Command.Command;
 import KotEBot.Command.CommandContext;
 import KotEBot.Command.CommandManager;
+import KotEBot.Config;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,8 +23,10 @@ public class Help implements Command {
             StringBuilder builder = new StringBuilder();
 
             manager.getCommands().stream().map(Command::getName).forEach(
-                    (it) -> builder.append("`!").append(it).append("`\n")
+                    (it) -> builder.append("`").append(Config.get("prefix")).append(it).append("`\n")
             );
+
+            builder.append("\n`" + Config.get("prefix") + "help [command]`");
 
             ctx.sendMsg("Commands", "https://github.com/KotE830/KotEBot/tree/main/src/main/java/KotEBot/Command/Commands", builder.toString());
             return;
@@ -49,11 +52,11 @@ public class Help implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`!help` : List of commands.\n" +
-                "`!help [command]` : Manual of the command.\n\nAliase\n");
+        builder.append("`" + Config.get("prefix") + "help` : List of commands.\n" +
+                "`" + Config.get("prefix") + "help [command]` : Manual of the command.\n\nAliase\n");
 
         this.getAliases().stream().forEach(
-                (it) -> builder.append("`!").append(it).append("` ")
+                (it) -> builder.append("`" + Config.get("prefix") + it + "` ")
         );
 
         return builder.toString();

@@ -2,6 +2,7 @@ package KotEBot.Command.Commands;
 
 import KotEBot.Command.Command;
 import KotEBot.Command.CommandContext;
+import KotEBot.Config;
 import KotEBot.Music.GuildMusicManager;
 import KotEBot.Music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
@@ -17,7 +18,11 @@ import java.util.concurrent.TimeUnit;
 public class Queue implements Command {
     @Override
     public void handle(CommandContext ctx) {
-        final AudioChannel channel = ctx.getVoiceChannel();
+        if (ctx.getBotChannel() == null) {
+            ctx.sendMsg(Config.get("bot_name") + " needs to be in any voice channel.");
+            return;
+        }
+
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
         final BlockingQueue<AudioTrack> queue = musicManager.scheduler.queue;
 
@@ -34,12 +39,12 @@ public class Queue implements Command {
             final AudioTrack track = trackList.get(i);
             final AudioTrackInfo info = track.getInfo();
 
-            queueMsg += "#" + String.valueOf(i + 1) + " `" + info.title + " by " +
+            queueMsg += "#" + (i + 1) + " `" + info.title + " by " +
                     info.author + "` [`" + formatTime(track.getDuration()) + "`]\n";
         }
 
         if (trackList.size() > trackCount) {
-            queueMsg += "And" + String.valueOf(trackList.size() - trackCount) + "` more...";
+            queueMsg += "And" + (trackList.size() - trackCount) + "` more...";
         }
 
         ctx.sendMsg(queueMsg);
@@ -62,10 +67,10 @@ public class Queue implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`!queue` : Shows the queued up songs.\n\nAliase\n");
+        builder.append("`" + Config.get("prefix") + "queue` : Shows the queued up songs.\n\nAliase\n");
 
         this.getAliases().stream().forEach(
-                (it) -> builder.append("`!").append(it).append("` ")
+                (it) -> builder.append("`" + Config.get("prefix")).append(it).append("` ")
         );
 
         return builder.toString();

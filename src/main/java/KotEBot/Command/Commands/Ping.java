@@ -2,6 +2,7 @@ package KotEBot.Command.Commands;
 
 import KotEBot.Command.Command;
 import KotEBot.Command.CommandContext;
+import KotEBot.Config;
 import net.dv8tion.jda.api.JDA;
 
 public class Ping implements Command {
@@ -22,6 +23,6 @@ public class Ping implements Command {
 
     @Override
     public String getHelp() {
-        return "`!ping` : Ping.";
+        return "`" + Config.get("prefix") + "ping` : Ping.";
     }
 }

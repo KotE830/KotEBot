@@ -1,6 +1,7 @@
 package KotEBot.Command;
 
 import KotEBot.Command.Commands.*;
+import KotEBot.Config;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -58,9 +59,9 @@ public class CommandManager {
         return null;
     }
 
-    public void handle(MessageReceivedEvent event, String prefix) {
+    public void handle(MessageReceivedEvent event) {
         String[] split = event.getMessage().getContentRaw()
-                .replaceFirst("(?i)" + Pattern.quote(prefix), "")
+                .replaceFirst("(?i)" + Pattern.quote(Config.get("prefix")), "")
                 .split("\\s+");
         
         String invoke = split[0].toLowerCase();
@@ -76,8 +77,8 @@ public class CommandManager {
             cmd.handle(ctx);
         } else {
             EmbedBuilder info = new EmbedBuilder();
-            info.setTitle("KotEBot", "https://github.com/KotE830/KotEBot");
-            info.setDescription("There is no commands.\nYou can check the commands by `!help`");
+            info.setTitle(Config.get("bot_name"), "https://github.com/KotE830/KotEBot");
+            info.setDescription("There is no commands.\nYou can check the commands by `" + Config.get("prefix") + "help`");
             info.setColor(0xf45642);
             info.setFooter("create by " + event.getAuthor().getName(), event.getMember().getUser().getAvatarUrl());
 
