@@ -10,8 +10,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class Queue implements Command {
@@ -23,7 +23,7 @@ public class Queue implements Command {
         }
 
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
-        final BlockingQueue<AudioTrack> queue = musicManager.scheduler.queue;
+        final LinkedList<AudioTrack> queue = musicManager.scheduler.queue;
         final AudioTrack nowTrack = musicManager.audioPlayer.getPlayingTrack();
 
         if (queue.isEmpty() && nowTrack == null) {

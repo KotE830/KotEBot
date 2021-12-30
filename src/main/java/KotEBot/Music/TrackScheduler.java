@@ -6,17 +6,16 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.LinkedList;
 
 public class TrackScheduler extends AudioEventAdapter {
     public final AudioPlayer player;
-    public final BlockingQueue<AudioTrack> queue;
+    public final LinkedList<AudioTrack> queue;
     public boolean repeating = false;
 
     public TrackScheduler(AudioPlayer player) {
         this.player = player;
-        this.queue = new LinkedBlockingQueue<>();
+        this.queue = new LinkedList<>();
     }
 
     public void queue(AudioTrack track) {
@@ -29,19 +28,17 @@ public class TrackScheduler extends AudioEventAdapter {
         this.player.startTrack(this.queue.poll(), false);
     }
 
-    @Override
-    public void onPlayerPause(AudioPlayer player) {
+    public void playerPause(AudioPlayer player) {
         // Player was paused
         player.setPaused(true);
     }
 
-    @Override
-    public void onPlayerResume(AudioPlayer player) {
+    public void playerResume(AudioPlayer player) {
         // Player was resumed
         player.setPaused(false);
     }
 
-    public void onPlayerSkip(AudioTrack track) {
+    public void playerSkip(AudioTrack track) {
         if (this.repeating) {
             if (this.queue.size() == 0) {
                 queue(track.makeClone());
@@ -52,6 +49,10 @@ public class TrackScheduler extends AudioEventAdapter {
         }
 
         nextTrack();
+    }
+
+    public void playerRemove(int index) {
+        this.queue.remove(index);
     }
 
     @Override

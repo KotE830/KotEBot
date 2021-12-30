@@ -35,7 +35,7 @@ public class Pause implements Command {
             return;
         }
 
-        musicManager.scheduler.onPlayerPause(audioPlayer);
+        musicManager.scheduler.playerPause(audioPlayer);
 
         ctx.sendMsg("The player has been paused.");
     }

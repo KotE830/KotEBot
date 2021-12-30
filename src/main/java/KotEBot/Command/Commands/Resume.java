@@ -38,7 +38,7 @@ public class Resume implements Command {
             return;
         }
 
-        musicManager.scheduler.onPlayerResume(audioPlayer);
+        musicManager.scheduler.playerResume(audioPlayer);
 
         ctx.sendMsg("The player has been resumed.");
     }

@@ -31,7 +31,7 @@ public class Skip implements Command {
             return;
         }
 
-        musicManager.scheduler.onPlayerSkip(track);
+        musicManager.scheduler.playerSkip(track);
 
         ctx.sendMsg("Skipped the " + track.getInfo().title + ".");
     }

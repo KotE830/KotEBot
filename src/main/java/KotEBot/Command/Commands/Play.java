@@ -40,6 +40,15 @@ public class Play implements Command {
         PlayerManager.getInstance().loadAndPlay(ctx.getEvent(), link);
     }
 
+    private boolean isUrl(String url) {
+        try {
+            new URI(url);
+            return true;
+        } catch (URISyntaxException e) {
+            return false;
+        }
+    }
+
     @Override
     public String getName() {
         return "play";
@@ -57,15 +66,6 @@ public class Play implements Command {
         );
 
         return builder.toString();
-    }
-
-    private boolean isUrl(String url) {
-        try {
-            new URI(url);
-            return true;
-        } catch (URISyntaxException e) {
-            return false;
-        }
     }
 
     @Override
