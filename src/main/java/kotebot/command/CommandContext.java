@@ -1,6 +1,6 @@
-package KotEBot.Command;
+package kotebot.command;
 
-import KotEBot.Config;
+import kotebot.Config;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.AudioChannel;

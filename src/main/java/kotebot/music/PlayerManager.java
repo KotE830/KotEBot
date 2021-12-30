@@ -1,6 +1,6 @@
-package KotEBot.Music;
+package kotebot.music;
 
-import KotEBot.Config;
+import kotebot.Config;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;

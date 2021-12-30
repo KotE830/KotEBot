@@ -1,4 +1,4 @@
-# KotEBot
+# kotebot
 
 This is a discord bot with JDA and lavaplayer.
 

@@ -1,16 +1,17 @@
-package KotEBot.Command.Commands;
+package kotebot.command.commands;
 
-import KotEBot.Command.Command;
-import KotEBot.Command.CommandContext;
-import KotEBot.Config;
-import KotEBot.Music.GuildMusicManager;
-import KotEBot.Music.PlayerManager;
+import kotebot.command.Command;
+import kotebot.command.CommandContext;
+import kotebot.Config;
+import kotebot.music.GuildMusicManager;
+import kotebot.music.PlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Skip implements Command {
+public class Resume implements Command {
     @Override
     public void handle(CommandContext ctx) {
         if (ctx.getBotChannel() == null) {
@@ -19,7 +20,8 @@ public class Skip implements Command {
         }
 
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
-        final AudioTrack track = musicManager.audioPlayer.getPlayingTrack();
+        final AudioPlayer audioPlayer = musicManager.audioPlayer;
+        final AudioTrack track = audioPlayer.getPlayingTrack();
 
         if (track == null) {
             ctx.sendMsg("There is no track playing currently.");
@@ -31,22 +33,26 @@ public class Skip implements Command {
             return;
         }
 
-        musicManager.scheduler.playerSkip(track);
+        if (!audioPlayer.isPaused()) {
+            ctx.sendMsg("The player is playing.");
+            return;
+        }
 
-        ctx.sendMsg("Skipped the " + track.getInfo().title + ".");
+        musicManager.scheduler.playerResume(audioPlayer);
+
+        ctx.sendMsg("The player has been resumed.");
     }
 
     @Override
     public String getName() {
-        return "skip";
+        return "resume";
     }
 
     @Override
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`" + Config.get("prefix") + "skip`\nSkip the current track.\n" +
-                "You need to be in any voice channel with " + Config.get("bot_name") + ".\n\nAliase\n");
+        builder.append("`" + Config.get("prefix") + "help\n\nAliase\n");
 
         this.getAliases().stream().forEach(
                 (it) -> builder.append("`" + Config.get("prefix")).append(it).append("` ")
@@ -57,6 +63,6 @@ public class Skip implements Command {
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("s");
+        return Arrays.asList("re");
     }
 }

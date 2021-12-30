@@ -1,4 +1,4 @@
-package KotEBot;
+package kotebot;
 
 import io.github.cdimascio.dotenv.Dotenv;
 

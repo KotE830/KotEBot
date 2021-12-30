@@ -1,9 +1,9 @@
-package KotEBot.Command.Commands;
+package kotebot.command.commands;
 
-import KotEBot.Command.Command;
-import KotEBot.Command.CommandContext;
-import KotEBot.Command.CommandManager;
-import KotEBot.Config;
+import kotebot.command.Command;
+import kotebot.command.CommandContext;
+import kotebot.command.CommandManager;
+import kotebot.Config;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,7 +1,7 @@
-package KotEBot.Command;
+package kotebot.command;
 
-import KotEBot.Command.Commands.*;
-import KotEBot.Config;
+import kotebot.command.commands.*;
+import kotebot.Config;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 

@@ -1,10 +1,10 @@
-package KotEBot.Command.Commands;
+package kotebot.command.commands;
 
-import KotEBot.Command.Command;
-import KotEBot.Command.CommandContext;
-import KotEBot.Config;
-import KotEBot.Music.GuildMusicManager;
-import KotEBot.Music.PlayerManager;
+import kotebot.command.Command;
+import kotebot.command.CommandContext;
+import kotebot.Config;
+import kotebot.music.GuildMusicManager;
+import kotebot.music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 

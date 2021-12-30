@@ -1,6 +1,6 @@
-package KotEBot;
+package kotebot;
 
-import KotEBot.Command.CommandManager;
+import kotebot.command.CommandManager;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

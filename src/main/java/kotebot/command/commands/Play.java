@@ -1,9 +1,9 @@
-package KotEBot.Command.Commands;
+package kotebot.command.commands;
 
-import KotEBot.Command.Command;
-import KotEBot.Command.CommandContext;
-import KotEBot.Config;
-import KotEBot.Music.PlayerManager;
+import kotebot.command.Command;
+import kotebot.command.CommandContext;
+import kotebot.Config;
+import kotebot.music.PlayerManager;
 
 import java.net.URI;
 import java.net.URISyntaxException;

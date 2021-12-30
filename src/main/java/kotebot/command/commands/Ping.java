@@ -1,8 +1,8 @@
-package KotEBot.Command.Commands;
+package kotebot.command.commands;
 
-import KotEBot.Command.Command;
-import KotEBot.Command.CommandContext;
-import KotEBot.Config;
+import kotebot.command.Command;
+import kotebot.command.CommandContext;
+import kotebot.Config;
 import net.dv8tion.jda.api.JDA;
 
 public class Ping implements Command {

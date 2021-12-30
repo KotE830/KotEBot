@@ -1,24 +1,20 @@
-package KotEBot.Command.Commands;
+package kotebot.command.commands;
 
-import KotEBot.Command.Command;
-import KotEBot.Command.CommandContext;
-import KotEBot.Config;
-import KotEBot.Music.GuildMusicManager;
-import KotEBot.Music.PlayerManager;
+import kotebot.command.Command;
+import kotebot.command.CommandContext;
+import kotebot.Config;
+import kotebot.music.GuildMusicManager;
+import kotebot.music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Resume implements Command {
+public class NowPlaying implements Command {
     @Override
     public void handle(CommandContext ctx) {
-        if (ctx.getBotChannel() == null) {
-            ctx.sendMsg(Config.get("bot_name") + " needs to be in any voice channel.");
-            return;
-        }
-
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
         final AudioPlayer audioPlayer = musicManager.audioPlayer;
         final AudioTrack track = audioPlayer.getPlayingTrack();
@@ -28,31 +24,21 @@ public class Resume implements Command {
             return;
         }
 
-        if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
-            ctx.sendMsg("You need to be in voice channel where " + Config.get("bot_name") + " is in.");
-            return;
-        }
+        final AudioTrackInfo info = track.getInfo();
 
-        if (!audioPlayer.isPaused()) {
-            ctx.sendMsg("The player is playing.");
-            return;
-        }
-
-        musicManager.scheduler.playerResume(audioPlayer);
-
-        ctx.sendMsg("The player has been resumed.");
+        ctx.sendMsg("**Now playing**\n`" + info.title + "`\nby `" + info.author + "\n` (link : <" + info.uri + ">)");
     }
 
     @Override
     public String getName() {
-        return "resume";
+        return "nowplaying";
     }
 
     @Override
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`" + Config.get("prefix") + "help\n\nAliase\n");
+        builder.append("`" + Config.get("prefix") + "nowplaying`\nShows the current playing song.\n\nAliase\n");
 
         this.getAliases().stream().forEach(
                 (it) -> builder.append("`" + Config.get("prefix")).append(it).append("` ")
@@ -63,6 +49,6 @@ public class Resume implements Command {
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("re");
+        return Arrays.asList("now", "np", "nowplay");
     }
 }
