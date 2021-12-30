@@ -26,7 +26,7 @@ public class NowPlaying implements Command {
 
         final AudioTrackInfo info = track.getInfo();
 
-        ctx.sendMsg("**Now playing**\n`" + info.title + "`\nby `" + info.author + "\n` (link : <" + info.uri + ">)");
+        ctx.sendMsg("**Now playing**\n`" + info.title + "`\nby `" + info.author + "\n\n` (link : <" + info.uri + ">)");
     }
 
     @Override

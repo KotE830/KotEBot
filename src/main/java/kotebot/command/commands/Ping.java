@@ -12,7 +12,7 @@ public class Ping implements Command {
 
         jda.getRestPing().queue(
                 (ping) -> ctx
-                        .sendMsg("Reset ping: " + ping + "ms\nWS ping : " + jda.getGatewayPing() + "ms")
+                        .sendMsg("Reset ping : " + ping + "ms\nWS ping : " + jda.getGatewayPing() + "ms")
         );
     }
 

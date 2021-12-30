@@ -14,7 +14,7 @@ public class Skip implements Command {
     @Override
     public void handle(CommandContext ctx) {
         if (ctx.getBotChannel() == null) {
-            ctx.sendMsg(Config.get("bot_name") + " needs to be in any voice channel.");
+            ctx.sendMsg("**" + Config.get("bot_name") + "** needs to be in any voice channel.");
             return;
         }
 
@@ -27,7 +27,7 @@ public class Skip implements Command {
         }
 
         if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
-            ctx.sendMsg("You need to be in voice channel where " + Config.get("bot_name") + " is in.");
+            ctx.sendMsg("You need to be in voice channel where **" + Config.get("bot_name") + "** is in.");
             return;
         }
 
@@ -46,7 +46,7 @@ public class Skip implements Command {
         StringBuilder builder = new StringBuilder();
 
         builder.append("`" + Config.get("prefix") + "skip`\nSkip the current track.\n" +
-                "You need to be in any voice channel with " + Config.get("bot_name") + ".\n\nAliase\n");
+                "You need to be in any voice channel with **" + Config.get("bot_name") + "**.\n\nAliase\n");
 
         this.getAliases().stream().forEach(
                 (it) -> builder.append("`" + Config.get("prefix")).append(it).append("` ")

@@ -99,10 +99,9 @@ public class PlayerManager {
         event.getChannel().sendTyping().queue();
 
         EmbedBuilder info = new EmbedBuilder();
-        info.setTitle(Config.get("bot_name"), "https://github.com/KotE830/KotEBot");
+        info.setTitle(track.getInfo().title, track.getInfo().uri);
 
-        info.setDescription("Adding to queue\n`" + track.getInfo().title +
-                "`\nby `" + track.getInfo().author + "`");
+        info.setDescription("Adding to queue.\n\n**Total** " + getMusicManager(event.getGuild()).scheduler.queue.size());
 
         info.setColor(0xf45642);
         info.setFooter("create by " + event.getAuthor().getName(), event.getMember().getUser().getAvatarUrl());

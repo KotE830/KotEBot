@@ -20,7 +20,7 @@ public class Leave implements Command {
 
         if (track != null) {
             if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
-                ctx.sendMsg("The music is playing.\nYou need to be in voice channel where " + Config.get("bot_name") + " is in.");
+                ctx.sendMsg("The music is playing.\nYou need to be in voice channel where **" + Config.get("bot_name") + "** is in.");
                 return;
             }
 
@@ -32,7 +32,7 @@ public class Leave implements Command {
         AudioManager audioManager = ctx.getGuild().getAudioManager();
 
         audioManager.closeAudioConnection();
-        ctx.sendMsg( "Disconnect to " + audioChannel.getName() + ".");
+        ctx.sendMsg( "Disconnect to **" + audioChannel.getName() + "**.");
     }
 
     @Override
@@ -45,7 +45,8 @@ public class Leave implements Command {
         StringBuilder builder = new StringBuilder();
 
         builder.append("`" + Config.get("prefix") + "leave`\nBot leaves the voice channel.\n" +
-                "If music is playing, stop the current song and clear the queue.\n\nAliase\n");
+                "If music is playing and you are in voice channel with **" + Config.get("bot_name") +
+                "**, stop the current song and clear the queue.\n\nAliase\n");
 
         this.getAliases().stream().forEach(
                 (it) -> builder.append("`" + Config.get("prefix")).append(it).append("` ")

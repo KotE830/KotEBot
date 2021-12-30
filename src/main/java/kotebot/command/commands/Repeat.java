@@ -14,7 +14,7 @@ public class Repeat implements Command {
     @Override
     public void handle(CommandContext ctx) {
         if (ctx.getBotChannel() == null) {
-            ctx.sendMsg(Config.get("bot_name") + " needs to be in any voice channel.");
+            ctx.sendMsg("**" + Config.get("bot_name") + "** needs to be in any voice channel.");
             return;
         }
 
@@ -27,7 +27,7 @@ public class Repeat implements Command {
         }
 
         if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
-            ctx.sendMsg("You need to be in voice channel where " + Config.get("bot_name") + " is in.");
+            ctx.sendMsg("You need to be in voice channel where **" + Config.get("bot_name") + "** is in.");
             return;
         }
 
@@ -36,7 +36,7 @@ public class Repeat implements Command {
         musicManager.scheduler.repeating = newRepeating;
 
         String repeatMsg = newRepeating ? "repeating" : "not repeating";
-        ctx.sendMsg("The player has been set to **" + repeatMsg + "**");
+        ctx.sendMsg("The player has been set to **" + repeatMsg + "**.");
     }
 
     @Override

@@ -12,7 +12,7 @@ public class Pause implements Command {
     @Override
     public void handle(CommandContext ctx) {
         if (ctx.getBotChannel() == null) {
-            ctx.sendMsg(Config.get("bot_name") + " needs to be in any voice channel.");
+            ctx.sendMsg("**" + Config.get("bot_name") + "** needs to be in any voice channel.");
             return;
         }
 
@@ -26,7 +26,7 @@ public class Pause implements Command {
         }
 
         if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
-            ctx.sendMsg("You need to be in voice channel where " + Config.get("bot_name") + " is in.");
+            ctx.sendMsg("You need to be in voice channel where **" + Config.get("bot_name") + "** is in.");
             return;
         }
 
@@ -47,7 +47,7 @@ public class Pause implements Command {
 
     @Override
     public String getHelp() {
-        return "`" + Config.get("prefix") + "pause`\nPause the current song.\n" +
-                "You need to be in any voice channel with " + Config.get("bot_name") + ".";
+        return "`" + Config.get("prefix") + "pause`\nPause the player.\n" +
+                "You need to be in any voice channel with **" + Config.get("bot_name") + "**.";
     }
 }

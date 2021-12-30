@@ -20,14 +20,14 @@ public class Join implements Command {
         }
 
         if (audioChannel == ctx.getBotChannel()) {
-            ctx.sendMsg(Config.get("bot_name") + "is already in " + audioChannel.getName() + ".");
+            ctx.sendMsg("**"  + Config.get("bot_name") + "** is already in **" + audioChannel.getName() + "**.");
             return;
         }
 
         AudioManager audioManager = ctx.getGuild().getAudioManager();
 
         audioManager.openAudioConnection(audioChannel);
-        ctx.sendMsg( "Connect to " + audioChannel.getName() + ".");
+        ctx.sendMsg( "Connect to **" + audioChannel.getName() + "**.");
     }
 
     @Override

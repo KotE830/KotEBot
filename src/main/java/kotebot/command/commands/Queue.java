@@ -47,12 +47,12 @@ public class Queue implements Command {
             final AudioTrack track = trackList.get(i);
             final AudioTrackInfo info = track.getInfo();
 
-            queueMsg += "#" + (i + 1) + " `" + info.title + "` [`" + formatTime(track.getDuration()) + "`]\n\n";
+            queueMsg += "#" + (i + 1) + " " + info.title + " [" + formatTime(track.getDuration()) + "]\n\n";
             totalTime += track.getDuration();
         }
 
         if (trackList.size() > trackCount) {
-            queueMsg += "And" + (trackList.size() - trackCount) + "` more...\n\n";
+            queueMsg += "And" + (trackList.size() - trackCount) + " more...\n\n";
 
             for (int i = trackCount; i < trackList.size(); i++) {
                 final AudioTrack track = trackList.get(i);
@@ -60,7 +60,7 @@ public class Queue implements Command {
             }
         }
 
-        queueMsg += "Total time : `" + formatTime(totalTime) + "`.";
+        queueMsg += "Total time : **" + formatTime(totalTime) + "**";
 
         ctx.sendMsg(queueMsg);
     }
@@ -82,7 +82,7 @@ public class Queue implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`" + Config.get("prefix") + "queue` : Shows the queued up songs.\n\nAliase\n");
+        builder.append("`" + Config.get("prefix") + "queue`\nShows the queued up songs.\n\nAliase\n");
 
         this.getAliases().stream().forEach(
                 (it) -> builder.append("`" + Config.get("prefix")).append(it).append("` ")

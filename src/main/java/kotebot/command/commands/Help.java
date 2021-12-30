@@ -52,8 +52,8 @@ public class Help implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`" + Config.get("prefix") + "help`\nList of commands.\n" +
-                "`" + Config.get("prefix") + "help [command]` : Manual of the command.\n\nAliase\n");
+        builder.append("`" + Config.get("prefix") + "help`\nList of commands.\n\n" +
+                "`" + Config.get("prefix") + "help [command]`\nManual of the command.\n\nAliase\n");
 
         this.getAliases().stream().forEach(
                 (it) -> builder.append("`" + Config.get("prefix") + it + "` ")
@@ -64,6 +64,6 @@ public class Help implements Command {
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("commands", "cmds", "commandlist");
+        return Arrays.asList("commands", "cmds", "commandlist", "h");
     }
 }
