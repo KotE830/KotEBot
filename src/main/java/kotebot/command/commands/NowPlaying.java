@@ -26,7 +26,7 @@ public class NowPlaying implements Command {
 
         final AudioTrackInfo info = track.getInfo();
 
-        ctx.sendMsg("**Now playing**\n`" + info.title + "`\nby `" + info.author + "\n\n` (link : <" + info.uri + ">)");
+        ctx.sendMsg("**Now playing**\n" + info.title + "\nby " + info.author + "\n\n (link : <" + info.uri + ">)");
     }
 
     @Override
@@ -38,7 +38,7 @@ public class NowPlaying implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`" + Config.get("prefix") + "nowplaying`\nShows the current playing song.\n\nAliase\n");
+        builder.append("`" + Config.get("prefix") + "nowplaying`\nShows the current playing song.\n\nAliases\n");
 
         this.getAliases().stream().forEach(
                 (it) -> builder.append("`" + Config.get("prefix")).append(it).append("` ")

@@ -48,7 +48,7 @@ public class Repeat implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`" + Config.get("prefix") + "repeat`\nLoops the current song.\n\nAliase\n");
+        builder.append("`" + Config.get("prefix") + "repeat`\nLoops the current queue.\n\nAliase\n");
 
         this.getAliases().stream().forEach(
                 (it) -> builder.append("`" + Config.get("prefix")).append(it).append("` ")

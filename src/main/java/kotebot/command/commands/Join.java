@@ -14,13 +14,13 @@ public class Join implements Command {
     public void handle(CommandContext ctx) {
         AudioChannel audioChannel = ctx.getVoiceChannel();
 
-        if (audioChannel == null) {
-            ctx.sendMsg("You need to be in any voice channel.");
+        if (audioChannel == ctx.getBotChannel()) {
+            ctx.sendMsg("**" + Config.get("bot_name") + "** is already in **" + audioChannel.getName() + "**.");
             return;
         }
 
-        if (audioChannel == ctx.getBotChannel()) {
-            ctx.sendMsg("**"  + Config.get("bot_name") + "** is already in **" + audioChannel.getName() + "**.");
+        if (audioChannel == null) {
+            ctx.sendMsg("You need to be in any voice channel.");
             return;
         }
 
@@ -39,7 +39,7 @@ public class Join implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`" + Config.get("prefix") + "join`\nBot joins your voice channel.\n" +
+        builder.append("`" + Config.get("prefix") + "join`\n**" + Config.get("bot_name") + "** joins your voice channel.\n" +
                 "You need to be in any voice channel.\n\nAliase\n");
 
         this.getAliases().stream().forEach(

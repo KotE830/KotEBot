@@ -19,17 +19,17 @@ public class Resume implements Command {
             return;
         }
 
+        if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
+            ctx.sendMsg("You need to be in voice channel where **" + Config.get("bot_name") + "** is in.");
+            return;
+        }
+
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
         final AudioPlayer audioPlayer = musicManager.audioPlayer;
         final AudioTrack track = audioPlayer.getPlayingTrack();
 
         if (track == null) {
             ctx.sendMsg("There is no track playing currently.");
-            return;
-        }
-
-        if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
-            ctx.sendMsg("You need to be in voice channel where **" + Config.get("bot_name") + "** is in.");
             return;
         }
 
@@ -53,7 +53,7 @@ public class Resume implements Command {
         StringBuilder builder = new StringBuilder();
 
         builder.append("`" + Config.get("prefix") + "resume`\nResume the paused player.\n" +
-                "You need to be in any voice channel with **" + Config.get("bot_name") + "**.\n\nAliase\n");
+                "You need to be in voice channel where **" + Config.get("bot_name") + "** is in.\n\nAliase\n");
 
         this.getAliases().stream().forEach(
                 (it) -> builder.append("`" + Config.get("prefix")).append(it).append("` ")

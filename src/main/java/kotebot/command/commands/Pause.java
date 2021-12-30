@@ -48,6 +48,6 @@ public class Pause implements Command {
     @Override
     public String getHelp() {
         return "`" + Config.get("prefix") + "pause`\nPause the player.\n" +
-                "You need to be in any voice channel with **" + Config.get("bot_name") + "**.";
+                "You need to be in voice channel where **" + Config.get("bot_name") + "** is in.";
     }
 }

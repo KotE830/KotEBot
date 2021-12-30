@@ -14,24 +14,24 @@ public class Play implements Command {
     @Override
     public void handle(CommandContext ctx) {
         if (ctx.getBotChannel() == null) {
-            ctx.sendMsg(Config.get("bot_name") + " needs to be in any voice channel.");
+            ctx.sendMsg("**" + Config.get("bot_name") + "** needs to be in any voice channel.");
             return;
         }
 
         if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
-            ctx.sendMsg("You need to be in voice channel where " + Config.get("bot_name") + " is in.");
+            ctx.sendMsg("You need to be in voice channel where **" + Config.get("bot_name") + "** is in.");
             return;
         }
 
         if (ctx.getArgs().isEmpty()) {
-            ctx.sendMsg(Config.get("prefix") + "play [youtube url]");
+            ctx.sendMsg("`" + Config.get("prefix") + "play [youtube url]`");
             return;
         }
 
         String link = String.join(" ", ctx.getArgs());
 
         if (!isUrl(link)) {
-            ctx.sendMsg("youtube search : `" + link + "`");
+            ctx.sendMsg("youtube search : **" + link + "**");
             link = "ytsearch:" + link;
         } else {
             ctx.sendMsg(link);
@@ -58,8 +58,8 @@ public class Play implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`" + Config.get("prefix") + "play [youtube url]`\nPlay youtube.\n\n" +
-                "You need to be in any voice channel with **" + Config.get("bot_name") + "**.\n\nAliase\n");
+        builder.append("`" + Config.get("prefix") + "play [youtube url]`\nPlay youtube.\n" +
+                "You need to be in voice channel where **" + Config.get("bot_name") + "** is in.\n\nAliase\n");
 
         this.getAliases().stream().forEach(
                 (it) -> builder.append("`" + Config.get("prefix")).append(it).append("` ")

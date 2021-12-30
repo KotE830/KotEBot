@@ -18,6 +18,11 @@ public class Skip implements Command {
             return;
         }
 
+        if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
+            ctx.sendMsg("You need to be in voice channel where **" + Config.get("bot_name") + "** is in.");
+            return;
+        }
+
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
         final AudioTrack track = musicManager.audioPlayer.getPlayingTrack();
 
@@ -26,14 +31,9 @@ public class Skip implements Command {
             return;
         }
 
-        if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
-            ctx.sendMsg("You need to be in voice channel where **" + Config.get("bot_name") + "** is in.");
-            return;
-        }
-
         musicManager.scheduler.playerSkip(track);
 
-        ctx.sendMsg("Skipped the " + track.getInfo().title + ".");
+        ctx.sendMsg("Skipped **" + track.getInfo().title + "**.");
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Skip implements Command {
         StringBuilder builder = new StringBuilder();
 
         builder.append("`" + Config.get("prefix") + "skip`\nSkip the current track.\n" +
-                "You need to be in any voice channel with **" + Config.get("bot_name") + "**.\n\nAliase\n");
+                "You need to be in voice channel where **" + Config.get("bot_name") + "** is in.\n\nAliase\n");
 
         this.getAliases().stream().forEach(
                 (it) -> builder.append("`" + Config.get("prefix")).append(it).append("` ")

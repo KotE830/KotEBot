@@ -18,6 +18,10 @@ public class Leave implements Command {
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
         final AudioTrack track = musicManager.audioPlayer.getPlayingTrack();
 
+        if (ctx.getBotChannel() == null) {
+            ctx.sendMsg("**" + Config.get("bot_name") + "** is not in any voice channel.");
+        }
+
         if (track != null) {
             if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
                 ctx.sendMsg("The music is playing.\nYou need to be in voice channel where **" + Config.get("bot_name") + "** is in.");
@@ -44,7 +48,7 @@ public class Leave implements Command {
     public String getHelp() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("`" + Config.get("prefix") + "leave`\nBot leaves the voice channel.\n" +
+        builder.append("`" + Config.get("prefix") + "leave`\n**" + Config.get("bot_name") + "** leaves the voice channel.\n" +
                 "If music is playing and you are in voice channel with **" + Config.get("bot_name") +
                 "**, stop the current song and clear the queue.\n\nAliase\n");
 

@@ -18,7 +18,7 @@ public class Queue implements Command {
     @Override
     public void handle(CommandContext ctx) {
         if (ctx.getBotChannel() == null) {
-            ctx.sendMsg(Config.get("bot_name") + " needs to be in any voice channel.");
+            ctx.sendMsg("**" + Config.get("bot_name") + "** needs to be in any voice channel.");
             return;
         }
 
@@ -34,7 +34,7 @@ public class Queue implements Command {
         final AudioTrackInfo nowTrackInfo = nowTrack.getInfo();
 
         String queueMsg = "**Now Playing**\n";
-        queueMsg += nowTrackInfo.title + " [`" + formatTime(nowTrack.getDuration()) + "`]\n\n";
+        queueMsg += nowTrackInfo.title + " [" + formatTime(nowTrack.getDuration()) + "]\n\n";
 
         final int trackCount = Math.min(queue.size(), 20);
         final List<AudioTrack> trackList = new ArrayList<>(queue);
@@ -60,7 +60,7 @@ public class Queue implements Command {
             }
         }
 
-        queueMsg += "Total time : **" + formatTime(totalTime) + "**";
+        queueMsg += "\n**Total time**\n" + formatTime(totalTime);
 
         ctx.sendMsg(queueMsg);
     }
