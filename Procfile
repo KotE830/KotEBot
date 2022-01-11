@@ -1,1 +1,1 @@
-worker: java -jar gradle\wrapper\gradle-wrapper.jar
+worker: java -jar gradle/wrapper/gradle-wrapper.jar
