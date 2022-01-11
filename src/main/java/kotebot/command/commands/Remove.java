@@ -21,8 +21,7 @@ public class Remove implements Command {
         }
 
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
-        final AudioPlayer audioPlayer = musicManager.audioPlayer;
-        final AudioTrack track = audioPlayer.getPlayingTrack();
+        final AudioTrack track = musicManager.audioPlayer.getPlayingTrack();
 
         if (track == null) {
             ctx.sendMsg("There is no track playing currently.");
@@ -47,9 +46,10 @@ public class Remove implements Command {
             return;
         }
 
+        AudioTrack removeTrack = queue.get(index - 1);
         musicManager.scheduler.playerRemove(index - 1);
 
-        ctx.sendMsg("Remove ");
+        ctx.sendMsg("Remove " + removeTrack.getInfo().title);
     }
 
     private boolean isNumeric(String num) {

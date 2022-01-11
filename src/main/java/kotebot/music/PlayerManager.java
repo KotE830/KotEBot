@@ -70,9 +70,9 @@ public class PlayerManager {
 
                 AudioTrack track = tracks.get(i);
 
-                sendAddMsg(event, track);
-
                 musicManager.scheduler.queue(track);
+
+                sendAddMsg(event, track);
             }
 
             @Override

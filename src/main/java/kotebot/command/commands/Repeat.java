@@ -21,11 +21,6 @@ public class Repeat implements Command {
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
         final AudioTrack track = musicManager.audioPlayer.getPlayingTrack();
 
-        if (track == null) {
-            ctx.sendMsg("There is no track playing currently.");
-            return;
-        }
-
         if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
             ctx.sendMsg("You need to be in voice channel where **" + Config.get("bot_name") + "** is in.");
             return;

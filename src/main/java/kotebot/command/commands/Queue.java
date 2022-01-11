@@ -47,7 +47,7 @@ public class Queue implements Command {
             final AudioTrack track = trackList.get(i);
             final AudioTrackInfo info = track.getInfo();
 
-            queueMsg += "#" + (i + 1) + " " + info.title + " [" + formatTime(track.getDuration()) + "]\n\n";
+            queueMsg += "`#" + (i + 1) + "` " + info.title + " [" + formatTime(track.getDuration()) + "]\n\n";
             totalTime += track.getDuration();
         }
 

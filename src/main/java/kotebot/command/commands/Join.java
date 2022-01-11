@@ -14,13 +14,13 @@ public class Join implements Command {
     public void handle(CommandContext ctx) {
         AudioChannel audioChannel = ctx.getVoiceChannel();
 
-        if (audioChannel == ctx.getBotChannel()) {
-            ctx.sendMsg("**" + Config.get("bot_name") + "** is already in **" + audioChannel.getName() + "**.");
+        if (audioChannel == null) {
+            ctx.sendMsg("You need to be in any voice channel.");
             return;
         }
 
-        if (audioChannel == null) {
-            ctx.sendMsg("You need to be in any voice channel.");
+        if (audioChannel == ctx.getBotChannel()) {
+            ctx.sendMsg("**" + Config.get("bot_name") + "** is already in **" + audioChannel.getName() + "**.");
             return;
         }
 
