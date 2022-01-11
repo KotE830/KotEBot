@@ -1,1 +1,1 @@
-worker: javac src/main/java/kotebot/Main.java | java src/main/java/kotebot/Main
+worker: java -jar out/artifacts/KotEBot_jar/KotEBot.jar
