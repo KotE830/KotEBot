@@ -1,1 +1,1 @@
-worker: java -jar gradle\wrapper\gradle-wrapper.jar
+worker: javac src/main/java/kotebot/Main.java | java src/main/java/kotebot/Main
