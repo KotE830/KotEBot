@@ -10,11 +10,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 public class Stop implements Command {
     @Override
     public void handle(CommandContext ctx) {
-        if (ctx.getBotChannel() == null) {
-            ctx.sendMsg("**" + Config.get("bot_name") + "** needs to be in any voice channel.");
-            return;
-        }
-
         if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
             ctx.sendMsg("You need to be in voice channel where **" + Config.get("bot_name") + "** is in.");
             return;

@@ -28,6 +28,7 @@ public class CommandManager {
         addCommand(new Resume());
         addCommand(new Skip());
         addCommand(new Stop());
+        addCommand(new Topplay());
     }
 
     private void addCommand(Command cmd) {

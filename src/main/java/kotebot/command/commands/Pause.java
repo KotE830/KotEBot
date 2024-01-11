@@ -11,11 +11,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 public class Pause implements Command {
     @Override
     public void handle(CommandContext ctx) {
-        if (ctx.getBotChannel() == null) {
-            ctx.sendMsg("**" + Config.get("bot_name") + "** needs to be in any voice channel.");
-            return;
-        }
-
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
         final AudioPlayer audioPlayer = musicManager.audioPlayer;
         final AudioTrack track = audioPlayer.getPlayingTrack();

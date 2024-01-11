@@ -17,11 +17,6 @@ import java.util.concurrent.TimeUnit;
 public class Queue implements Command {
     @Override
     public void handle(CommandContext ctx) {
-        if (ctx.getBotChannel() == null) {
-            ctx.sendMsg("**" + Config.get("bot_name") + "** needs to be in any voice channel.");
-            return;
-        }
-
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
         final LinkedList<AudioTrack> queue = musicManager.scheduler.queue;
         final AudioTrack nowTrack = musicManager.audioPlayer.getPlayingTrack();

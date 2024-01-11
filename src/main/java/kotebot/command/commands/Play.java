@@ -2,8 +2,10 @@ package kotebot.command.commands;
 
 import kotebot.command.Command;
 import kotebot.command.CommandContext;
+import kotebot.command.CommandManager;
 import kotebot.Config;
 import kotebot.music.PlayerManager;
+import net.dv8tion.jda.api.entities.AudioChannel;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,14 +15,12 @@ import java.util.List;
 public class Play implements Command {
     @Override
     public void handle(CommandContext ctx) {
-        if (ctx.getBotChannel() == null) {
-            ctx.sendMsg("**" + Config.get("bot_name") + "** needs to be in any voice channel.");
-            return;
-        }
+        AudioChannel botChannel = ctx.getBotChannel();
 
-        if (ctx.getVoiceChannel() != ctx.getBotChannel()) {
-            ctx.sendMsg("You need to be in voice channel where **" + Config.get("bot_name") + "** is in.");
-            return;
+        if (botChannel == null) {
+            CommandManager manager = new CommandManager();
+            Command cmd = manager.getCommand("join");
+            cmd.handle(ctx);
         }
 
         if (ctx.getArgs().isEmpty()) {
@@ -37,7 +37,7 @@ public class Play implements Command {
             ctx.sendMsg(link);
         }
 
-        PlayerManager.getInstance().loadAndPlay(ctx.getEvent(), link);
+        PlayerManager.getInstance().loadAndPlay(ctx.getEvent(), link, 0);
     }
 
     private boolean isUrl(String url) {

@@ -1,6 +1,5 @@
 package kotebot.music;
 
-import kotebot.Config;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
@@ -41,14 +40,18 @@ public class PlayerManager {
         });
     }
 
-    public void loadAndPlay(MessageReceivedEvent event, String trackUrl) {
+    public void loadAndPlay(MessageReceivedEvent event, String trackUrl, int index) {
         TextChannel channel = event.getTextChannel();
         final GuildMusicManager musicManager = this.getMusicManager(channel.getGuild());
 
         this.audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-                musicManager.scheduler.queue(track);
+                if (index == 1) {
+                    musicManager.scheduler.queueFirst(track);
+                } else {
+                    musicManager.scheduler.queue(track);
+                }
 
                 sendAddMsg(event, track);
             }
@@ -70,19 +73,24 @@ public class PlayerManager {
 
                 AudioTrack track = tracks.get(i);
 
-                musicManager.scheduler.queue(track);
+
+                if (index == 1) {
+                    musicManager.scheduler.queueFirst(track);
+                } else {
+                    musicManager.scheduler.queue(track);
+                }
 
                 sendAddMsg(event, track);
             }
 
             @Override
             public void noMatches() {
-
+                channel.sendMessage("Nothing found by " + trackUrl).queue();
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
-
+                channel.sendMessage("Could not play: " + exception.getMessage()).queue();
             }
         });
     }

@@ -5,7 +5,6 @@ import kotebot.command.CommandContext;
 import kotebot.Config;
 import kotebot.music.GuildMusicManager;
 import kotebot.music.PlayerManager;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import java.util.Arrays;
@@ -15,11 +14,6 @@ import java.util.List;
 public class Remove implements Command {
     @Override
     public void handle(CommandContext ctx) {
-        if (ctx.getBotChannel() == null) {
-            ctx.sendMsg("**" + Config.get("bot_name") + "** needs to be in any voice channel.");
-            return;
-        }
-
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
         final AudioTrack track = musicManager.audioPlayer.getPlayingTrack();
 
@@ -33,7 +27,7 @@ public class Remove implements Command {
             return;
         }
 
-        if (ctx.getArgs().size() == 0 || !isNumeric(ctx.getArgs().get(0))) {
+        if (ctx.getArgs().isEmpty() || !isNumeric(ctx.getArgs().get(0))) {
             ctx.sendMsg("`" + Config.get("prefix") + "remove [number]`");
             return;
         }

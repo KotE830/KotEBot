@@ -10,11 +10,13 @@ import javax.security.auth.login.LoginException;
 
 public class Main {
     public static JDA jda;
+
     public static void main(String[] args) throws LoginException {
         jda = JDABuilder.createDefault(Config.get("token")).build();
-        jda.getPresence().setStatus(OnlineStatus.ONLINE);
-        jda.getPresence().setActivity(Activity.playing(Config.get("prefix") + "help"));
+        jda.getPresence().setStatus(OnlineStatus.OFFLINE);
+        jda.getPresence().setActivity(Activity.listening(Config.get("prefix") + "help"));
 
         jda.addEventListener(new Listener());
     }
 }
+
